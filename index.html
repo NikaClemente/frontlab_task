@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/res/css/reset.css">
+    <link rel="stylesheet" href="/res/css/main.css">
+    <link rel="stylesheet" href="/res/css/modal.css">
+    <link rel="stylesheet" href="/res/css/userBox.css">
     
     <title>Список пользователей</title>
 </head>
@@ -13,13 +15,122 @@
     <div class="wrapper">
         <div class="header"></div>
         <div class="main">
-            <div id="user_list"></div>
+            <div class="user_box main_user_box">
+                <div class="menu user_box_menu">
+                    <div id="stat" class="stat menu_stat"></div>
+                    <div class="sort menu_sort">
+                        <img src="/res/image/img_91921.png" class="sortAlf sort_button"></img>
+
+                        <div class="modal modal_sort_size closed modal_option" id="modal_sort" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+                            <div>
+                                <button class="button_delete_sort" title="Удалить все фильтры" onclick="deleteSort()"></button>
+                                <button class="close-button" id="close-button-sort" title="Закрыть окно">X</button>
+                            </div>
+                            <div class="modal-guts modal_sort" role="document">
+                                <div class="modal_sort_title">Опции</div>
+                                <hr>
+                                <div class="options_variant">
+                                    <div class="options_variant_radioButton">
+                                        <div>
+                                            <input type="radio" id="options_variantChoice1" name="options_variant" value="stSort" onchange="setOption(value)">
+                                            <label for="options_variantChoice1">Стандартные сортировки</label>
+                                        </div>
+                                        
+                                        <div>
+                                            <input type="radio" id="options_variantChoice2" name="options_variant" value="srWord" onchange="setOption(value)">
+                                            <label for="options_variantChoice2">Поиск по слову</label>
+                                        </div>
+
+                                        <div>
+                                            <input type="radio" id="options_variantChoice3" name="options_variant" value="srAlf" onchange="setOption(value)">
+                                            <label for="options_variantChoice3">Поиск по алфавиту</label>
+                                        </div>
+                                    </div>
+                                    <hr class="hr1">
+                                    <div class="standart_sort">
+                                        <div class="modal_sort_stSort">Стандартные сортировки:</div>
+                                        <select class="modal_sort_stSort_select">
+                                            <option value="alf">По алфавиту</option>
+                                            <option value="un_alf">В обратном порядке</option>
+                                        </select>
+                                        <div class="modal_sort_stSort">По какому полю сортируем:</div>
+                                        <select class="modal_sort_poleSort_select">
+                                            <option value="first">Имя</option>
+                                            <option value="last">Фамилия</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="search_word">
+                                        <div class="modal_sort_stSort">Поиск по слову:</div>
+                                        <select class="modal_sort_srWord_select">
+                                            <option value="srFirst">По имени</option>
+                                            <option value="srLast">По фамилии</option>
+                                        </select>
+                                        <input type="text" class="modal_sort_srWord_text" value="" placeholder="Введите слово">
+                                    </div>
+
+                                    <div class="search_alf">
+                                        <div class="modal_sort_stSort">Поиск по алфавиту:</div>
+                                        <select class="modal_sort_srAlfPole_select">
+                                                <option value="srAlfFirst">По имени</option>
+                                                <option value="srAlfLast">По фамилии</option>
+                                            </select>
+                                        <div class="modal_sort_stSort">Выбор нужной буквы:</div>
+                                        <select class="modal_sort_srAlf_select"></select>
+                                    </div>
+
+                                </div>
+                                <button class="close_button button_mod close-button_sort" title="Применить настройки" onclick="closeSortButtonFiltered()">Отсортировать</button>
+                                <button class="close_button button_mod close-button_word" title="Применить настройки" onclick="closeWordButtonFiltered()">Поиск</button>
+                                <button class="close_button button_mod close-button_alf" title="Применить настройки" onclick="closeAlfButtonFiltered()">Поиск</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="user_list"></div>
+
+                <div class="modal-overlay closed" id="modal-overlay"></div>
+
+                <div class="modal modal_userInfo_size closed" id="modal" aria-hidden="true" aria-labelledby="modalTitle" aria-describedby="modalDescription" role="dialog">
+                    <button class="close-button" id="close-button" title="Закрыть окно">X</button>
+                    <div class="modal-guts modal_userInfo" role="document">
+                        <img class="user_avatarL">      <!-- Аватар юзера большой(picture.large) -->
+                        <div class="textBlock userFIOElement">
+                            <div class="text">Name:</div><div class="user_FIO"></div>    <!-- FIO -->
+                        </div>
+
+                        <div class="textBlock userFIOElement">
+                            <div class="text">Street:</div><div class="text_value user_street"></div> <!-- Улица -->
+                        </div>
+                        
+                        <div class="textBlock userCityElement">
+                            <div class="text">City:</div><div class="text_value user_city"></div>   <!-- Город -->
+                        </div>
+                        
+                        <div class="textBlock userStateElement">
+                            <div class="text">State:</div><div class="text_value user_state"></div>  <!-- Штат -->
+                        </div>
+                        
+                        <div class="textBlock userEmailElement">
+                            <div class="text">Email:</div><div class="text_value user_email"></div>  <!-- Email -->
+                        </div>
+                        
+                        <div class="textBlock userPhoneElement">
+                            <div class="text">Phone:</div><div class="text_value user_phone"></div>  <!-- Телефон -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="footer">© В. А. Максимова, 2019</div>
+
+        <div class="footer">
+            <div class="developer_name">© В. А. Максимова, 2019</div>
+            <img class="button_link developer_linkVK" src="/res/image/vk-logo.png" hint="VK" alt="linkVK" onclick="linkVK()">
+        </div>
+
     </div>
 </body>
 
-<!-- <script src="/res/js/main.js"></script> -->
 <script src="/res/js/ajax.js"></script>
 
 </html>
