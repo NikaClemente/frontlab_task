@@ -8,17 +8,29 @@ var dictAZ = "abcdefghijklmnopqrstuvwxyz";
 
 let xhr = new XMLHttpRequest();
 
-xhr.open('GET', 'https://api.randomuser.me/1.0/?results=50&nat=gb,us&inc=gender,name,location,email,phone,picture', false);
+xhr.open('GET', 'https://api.randomuser.me/1.0/?results=50&nat=gb,us&inc=gender,name,location,email,phone,picture');
 xhr.send();
 
-if (xhr.status != 200) {
-  alert( xhr.status + ': ' + xhr.statusText );
-} else {
-    var response = JSON.parse(xhr.responseText);
+let response;
+
+xhr.onreadystatechange = function() {
+  if (xhr.readyState != 4) return;
+
+  userListElement.innerHTML = '';
+
+  if (xhr.status != 200) {
+    alert(xhr.status + ': ' + xhr.statusText);
+  } else {
+    response = JSON.parse(xhr.responseText);
 
     createInfoStat(response);
     createUserList(response);
+  }
+
 }
+
+userListElement.innerHTML = 'Загружаю...';
+
 
 var modal = document.querySelector("#modal"),
     modal_sort = document.querySelector("#modal_sort"),
