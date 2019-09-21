@@ -4,7 +4,7 @@ let avatarUser;
 let newUser;
 let newUserText;
 
-var dictAZ = "abcdefghijklmnopqrstuvwxyz";
+let dictAZ = "abcdefghijklmnopqrstuvwxyz";
 
 let xhr = new XMLHttpRequest();
 
@@ -32,7 +32,7 @@ xhr.onreadystatechange = function() {
 userListElement.innerHTML = 'Загружаю...';
 
 
-var modal = document.querySelector("#modal"),
+let modal = document.querySelector("#modal"),
     modal_sort = document.querySelector("#modal_sort"),
 		modalOverlay = document.querySelector("#modal-overlay"),
     closeButton = document.querySelector("#close-button"),
@@ -125,7 +125,7 @@ function clickUserElement() {
   modal.classList.toggle("closed");
   modalOverlay.classList.toggle("closed");
 
-  var user_avatarL = document.querySelector(".user_avatarL"),
+  let user_avatarL = document.querySelector(".user_avatarL"),
     user_FIO = document.querySelector(".user_FIO"),
     user_street = document.querySelector(".user_street"),
     user_city = document.querySelector(".user_city"),
@@ -217,13 +217,13 @@ function closeAlfButtonFiltered(){
 function sort(key, pole) {
   response.results.sort(function(obj1, obj2) {
     if (pole == "first") {
-      var a1 = obj1.name.first.toLowerCase();
-      var b1 = obj2.name.first.toLowerCase();
+      let a1 = obj1.name.first.toLowerCase();
+      let b1 = obj2.name.first.toLowerCase();
     }
 
     if (pole == "last") {
-      var a1 = obj1.name.last.toLowerCase();
-      var b1 = obj2.name.last.toLowerCase();
+      let a1 = obj1.name.last.toLowerCase();
+      let b1 = obj2.name.last.toLowerCase();
     }
 
     if (key == "alf") {
